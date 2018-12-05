@@ -1,0 +1,21 @@
+BPS SECURITY LOG
+=================
+=================
+
+[403 GET Request: December 5, 2018 5:24 am]
+BPS: 3.2
+WP: 4.9.8
+Event Code: WPADMIN-SBR
+Solution: https://forum.ait-pro.com/forums/topic/security-log-event-codes/
+REMOTE_ADDR: 172.18.0.7
+Host Name: pry-final-seguridad_proxy_1.pry-final-seguridad_default
+SERVER_PROTOCOL: HTTP/1.0
+HTTP_CLIENT_IP: 
+HTTP_FORWARDED: 
+HTTP_X_FORWARDED_FOR: 172.18.0.1
+HTTP_X_CLUSTER_CLIENT_IP: 
+REQUEST_METHOD: GET
+HTTP_REFERER: 
+REQUEST_URI: /wp-admin/options-general.php?page=/bin/bash
+QUERY_STRING: page=/bin/bash
+HTTP_USER_AGENT: Mozilla/5.0 (X11; Fedora; Linux x86_64; rv:63.0) Gecko/20100101 Firefox/63.0

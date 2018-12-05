@@ -5,11 +5,15 @@ services:
     image: mariadb:latest
     restart: always
     volumes:
-      - db_data:/var/lib/mysql
+      - ./db_data:/var/lib/mysql
     environment:
       MYSQL_ROOT_PASSWORD: seg123
+      MYSQL_DATABASE: db
 
   app:
+    links:
+      - cache
+      - db
     depends_on:
       - db
       - cache
@@ -17,36 +21,23 @@ services:
       context: ./conf/wp
       dockerfile: Dockerfile
     restart: always
-    environment:
-      VIRTUAL_HOST: chenchenia.padoru
-      WORDPRESS_DB_HOST: db:3306
-      WORDPRESS_DB_NAME: db
-      WORDPRESS_DB_PASSWORD: seg123
-      WORDPRESS_TABLE_PREFIX: wpt_
-    #expose:
-    #  - "80"
-    #  - "443"
     volumes:
-      - wordpress_files:/var/www/html
+      - ./wordpress_data:/var/www/html
+      - ./conf/wp/wp-config.php:/var/www/html/wp-config.php
 
   proxy:
-    build:
-      context:  ./conf/proxy
-      dockerfile: Dockerfile
+    image: nginx:latest
+    restart: always
     ports:
       - "80:80"
       - "443:443"
+    volumes:
+      - ./conf/proxy/nginx.conf:/etc/nginx/nginx.conf
+      - ./conf/proxy/cert:/etc/nginx/ssl
+    depends_on:
+      - app 
     links:
       - app
 
   cache:
     image: redis
-    #command: redis-server /usr/local/etc/redis/redis.conf
-    #volumes:
-    #  - ./redis.conf:/usr/local/etc/redis/redis.conf
-    ports:
-      - "6379:6379"
-
-volumes:
-  db_data:
-  wordpress_files:
